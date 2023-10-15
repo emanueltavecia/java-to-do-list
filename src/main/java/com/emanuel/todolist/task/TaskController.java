@@ -30,10 +30,10 @@ public class TaskController {
     taskModel.setIdUser((UUID) idUser);
     var currentDate = LocalDateTime.now();
     if(currentDate.isAfter(taskModel.getStartAt()) || currentDate.isAfter(taskModel.getEndAt())) {
-      return ResponseEntity.status(400).body("A data de início e término devem ser maior que a atual.");
+      return ResponseEntity.status(400).body("The start and end date must be greater than the current one.");
     }
     if(taskModel.getStartAt().isAfter(taskModel.getEndAt())) {
-      return ResponseEntity.status(400).body("A data de início deve ser anterior a de término.");
+      return ResponseEntity.status(400).body("The start date must be before the end date.");
     }
     var task = this.taskRepository.save(taskModel);
     return ResponseEntity.status(200).body(task);
@@ -52,12 +52,12 @@ public class TaskController {
     var task = this.taskRepository.findById(id).orElse(null);
 
     if (task == null) {
-      return ResponseEntity.status(400).body("Tarefa não encontrada.");
+      return ResponseEntity.status(400).body("Task not found.");
     }
 
     var idUser = request.getAttribute("idUser");
     if (!task.getIdUser().equals(idUser)) {
-      return ResponseEntity.status(401).body("Você não tem permissão para alterar essa tarefa.");
+      return ResponseEntity.status(401).body("You don't have permission to change this task.");
     }
 
     Utils.copyNonNullProperties(taskModel, task);

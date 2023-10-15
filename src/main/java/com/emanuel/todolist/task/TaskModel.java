@@ -32,7 +32,7 @@ public class TaskModel {
 
   public void setTitle(String title) throws Exception {
     if (title.length() > 50) {
-      throw new Exception("O campo 'title' deve conter no máximo 50 caracteres.");
+      throw new Exception("The 'title' field must contain a maximum of 50 characters.");
     }
     this.title = title;
   }
